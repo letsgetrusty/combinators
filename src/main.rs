@@ -6,6 +6,20 @@ struct Student {
     gpa: f32,
 }
 
+impl Student {
+    /// Returns if students succeeded or not
+    /// ## Example
+    /// ```rust
+    /// let student = Student { name: "Foo".to_owned(), gpa: 2.5 };
+    /// assert!(!student.is_succeeded());
+    /// ```
+    fn is_succeeded(&self) -> bool {
+        // When you but succeeded statement in method
+        // help you to easy update it later
+        self.gpa >= 3.5
+    }
+}
+
 fn main() {
     let students = vec![
         "Bogdan 3.1",
@@ -16,15 +30,18 @@ fn main() {
     ];
 
     let good_students: Vec<Student> = students.iter()
-        .map(|s| {
+        // `filter_map` help you to filter and map in same time
+        .filter_map(|s| {
             let mut s = s.split(' ');
             let name = s.next()?.to_owned();
             let gpa = s.next()?.parse::<f32>().ok()?;
-
-            Some(Student { name, gpa })
+            let student = Student { name, gpa };
+            if student.is_succeeded() {
+                Some(student)
+            } else {
+                None
+            }
         })
-        .flatten()
-        .filter(|s| s.gpa >= 3.5)
         .collect();
 
     for s in good_students {
