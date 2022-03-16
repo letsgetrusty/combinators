@@ -26,10 +26,11 @@ fn main() {
         "Wallace 2.3",
         "Lidiya 3.5",
         "Kyle 3.9",
-        "Anatoliy 4.0"
+        "Anatoliy 4.0",
     ];
 
-    let good_students: Vec<Student> = students.iter()
+    let good_students: Vec<Student> = students
+        .iter()
         // `filter_map` help you to filter and map in same time
         .filter_map(|s| {
             let mut s = s.split(' ');
